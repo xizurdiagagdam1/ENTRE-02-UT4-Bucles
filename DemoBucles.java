@@ -1,3 +1,4 @@
+import java.util.Random;
 /**
  *    @author - 
  */
@@ -5,13 +6,15 @@ public class DemoBucles
 {
     private final char ASTERISCO = '*';
     private final char ESPACIO = ' ';
+    private Random generador;
+    private int numero;
 
     /**
      * Constructor  
      */
     public DemoBucles()
     {
-       
+        generador = new Random();
     }
 
     /**
@@ -26,9 +29,13 @@ public class DemoBucles
      *  Usa bucles while
      */
     public int mayorPotencia2(int numero) {
-        
-        return 0;
-
+        int contador = 1;
+        int potencia = 1;
+        while(Math.pow(2, contador) <= numero){
+            potencia = (int)Math.pow(2, contador);
+            contador ++;
+        }
+        return potencia;
     }
 
     /**
@@ -47,9 +54,14 @@ public class DemoBucles
      *  64 =    64
      */
     public void escribirSumaPotencias(int numero) {
-
-         
-
+        int restar = 0;
+        System.out.printf("\n%6d =", numero);
+        int contador = 1;
+        while(contador <= 6 && numero != restar){
+            System.out.printf("%6d",mayorPotencia2(numero - restar));
+            restar += mayorPotencia2(numero - restar);
+            contador ++;
+        }
     }
 
     /**
@@ -64,9 +76,24 @@ public class DemoBucles
      * 
      */
     public void generarAleatorios(int n) {
+        int contador = 1;
+        int generado;
+        System.out.printf("%s", "Nºs aleatorios como suma de potencias de 2");
+        while(contador <= n){
+            generado = generador.nextInt(256);
+            if(generado == 0){
+                contador = n + 10;
+            }else{
+                escribirSumaPotencias(generado);
+                contador ++;
+            }
+        }
 
-       
-
+        if(contador == n + 10){
+            System.out.printf("\n%s", "Proceso terminado porque se ha generado un 0");
+        }else{
+            System.out.printf("\n%s %d %s", "Proceso terminado porque se han generado ya",n, "aleatorios");
+        }
     }
 
     /**
@@ -76,7 +103,15 @@ public class DemoBucles
      */
     public void escribirCaracter(int n, char caracter)
     {
-         
+        for(int contador = 1; contador <= n; contador ++){
+            if(caracter == ASTERISCO){
+                System.out.printf("%c",ASTERISCO);
+            }else if(caracter == ESPACIO){
+                System.out.printf("%c",ESPACIO);
+            }else{
+                System.out.printf("%s","Los carácteres permitidos son '*' y ' '");
+            }
+        }
     }
 
     /**
@@ -85,11 +120,16 @@ public class DemoBucles
      *  
      *   Usa bucles for
      */
-    public  void mostrarEscalera(int escalones, int alto, int ancho) {
+    public void mostrarEscalera(int escalones, int alto, int ancho){
         System.out.println();
-
-         
-
+        int multiplicar = 0;
+        for(int a = 1; a <= escalones; a ++){
+                for(int b = 1; b <= alto; b ++){
+                    escribirCaracter(ancho * multiplicar, ' ');
+                    escribirCaracter(ancho, '*');
+                    System.out.printf("\n");
+                }
+                multiplicar ++;
+        }
     }
-
 }
